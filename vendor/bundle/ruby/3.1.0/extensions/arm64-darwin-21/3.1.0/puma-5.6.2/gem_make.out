@@ -1,0 +1,26 @@
+current directory: /Users/michael.white/idme-sandbox/idme-third-party-idp/vendor/bundle/ruby/3.1.0/gems/puma-5.6.2/ext/puma_http11
+/Users/michael.white/.rbenv/versions/3.1.1/bin/ruby -I /Users/michael.white/.rbenv/versions/3.1.1/lib/ruby/3.1.0 -r ./siteconf20220315-15951-w4w9wx.rb extconf.rb
+using OpenSSL pkgconfig (openssl.pc)
+checking for openssl/bio.h... yes
+checking for DTLS_method() in openssl/ssl.h... yes
+checking for TLS_server_method() in openssl/ssl.h... yes
+checking for SSL_CTX_set_min_proto_version(NULL, 0) in openssl/ssl.h... yes
+checking for X509_STORE_up_ref()... yes
+checking for SSL_CTX_set_ecdh_auto(NULL, 0) in openssl/ssl.h... yes
+checking for SSL_get1_peer_certificate() in openssl/ssl.h... no
+checking for Random.bytes... yes
+creating Makefile
+
+current directory: /Users/michael.white/idme-sandbox/idme-third-party-idp/vendor/bundle/ruby/3.1.0/gems/puma-5.6.2/ext/puma_http11
+make DESTDIR\= clean
+
+current directory: /Users/michael.white/idme-sandbox/idme-third-party-idp/vendor/bundle/ruby/3.1.0/gems/puma-5.6.2/ext/puma_http11
+make DESTDIR\=
+compiling http11_parser.c
+compiling mini_ssl.c
+compiling puma_http11.c
+linking shared-object puma/puma_http11.bundle
+
+current directory: /Users/michael.white/idme-sandbox/idme-third-party-idp/vendor/bundle/ruby/3.1.0/gems/puma-5.6.2/ext/puma_http11
+make DESTDIR\= install
+/opt/homebrew/bin/ginstall -c -m 0755 puma_http11.bundle ./.gem.20220315-15951-tn3p11/puma
