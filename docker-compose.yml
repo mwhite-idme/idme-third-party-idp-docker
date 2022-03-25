@@ -1,0 +1,85 @@
+version: "3.9"
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: password
+  myapp.idme.test:
+    build: .
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    volumes:
+      - .:/myapp
+    ports:
+      - "3000:3000"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.protocol=http"
+      - "traefik.http.routers.authority-router.rule=Host(`myapp.idme.test`)"
+      - "traefik.http.routers.authority-router.entrypoints=web"
+      - "traefik.http.services.authority-service.loadbalancer.server.port=3000"
+    depends_on:
+      - db
+  keycloak.idme.test:
+    image: jboss/keycloak:13.0.1
+    ports:
+      - "8080:8080"
+    environment:
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin
+    labels:
+      - "traefik.enable=true"
+      - "traefik.protocol=http"
+      - "traefik.http.routers.authority-router.rule=Host(`keycloak.idme.test`)"
+      - "traefik.http.routers.authority-router.entrypoints=web"
+      - "traefik.http.services.authority-service.loadbalancer.server.port=8080"
+  traefik:
+    image: traefik:v2.2.6
+    command:
+      - --log.level=DEBUG
+      - --api.insecure=true # for dashboard
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --entrypoints.web.address=:80
+      - --entrypoints.web-secure.address=:443
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      # - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+      - "traefik.enable=true"
+
+
+
+
+
+
+# version: "3.9"
+# services:
+#   db:
+#     image: postgres
+#     volumes:
+#       - ./tmp/db:/var/lib/postgresql/data
+#     environment:
+#       POSTGRES_PASSWORD: password
+#   web.test:
+#     build: .
+#     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+#     volumes:
+#       - .:/myapp
+#     ports:
+#       - "3000:3000"
+#       # - "8080:8080"
+#     depends_on:
+#       - db
+#   keycloak.test:
+#     image: jboss/keycloak:13.0.1
+#     ports:
+#       - "8080:8080"
+#     environment:
+#       - KEYCLOAK_USER: admin
+#       - KEYCLOAK_PASSWORD: admin
