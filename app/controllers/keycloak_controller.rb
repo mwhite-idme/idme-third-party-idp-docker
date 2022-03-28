@@ -3,7 +3,7 @@ class KeycloakController < ApplicationController
   def initialize
 
     @keycloak_client_id         = "ruby-demo"
-    @keycloak_client_secret     = "2e2dc325-32a3-4e28-bf1c-008e27e4dfea"
+    @keycloak_client_secret     = "145f82b5-6fb3-436b-82be-45deff9c95ca"
     @keycloak_redirect_uri      = "http://myapp.idme.test:3000/keycloak-callback"
     @keycloak_authorization_url = "http://keycloak.idme.test:8080/auth/realms/oidc_demo/protocol/openid-connect/auth"
     @keycloak_token_url         = "http://keycloak.idme.test:8080/auth/realms/oidc_demo/protocol/openid-connect/token"
